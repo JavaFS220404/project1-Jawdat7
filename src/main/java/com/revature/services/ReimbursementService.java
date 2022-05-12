@@ -1,8 +1,12 @@
 package com.revature.services;
 
+import com.revature.daos.ReimImpReim;
+import com.revature.daos.ReimbursementDao;
 import com.revature.models.Reimbursement;
+import com.revature.models.Role;
 import com.revature.models.Status;
 import com.revature.models.User;
+import com.revature.services.AuthService.NotexsituseException;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +28,25 @@ import java.util.List;
  *     <li>Get All Reimbursements</li>
  * </ul>
  */
+class NoteFinanceManException extends Exception {
+	// Two most common constructors for throwables
+	public NoteFinanceManException() {
+		super();
+	}
+
+	public NoteFinanceManException(String message) {
+		super(message);
+	}
+}
 public class ReimbursementService {
+	private ReimbursementDao reim2 = new ReimImpReim();
+     
+       
+	
+	
+	// if (use.equals(rol.(financ m)){
+	//Exception, 
+	//
 
     /**
      * <ul>
@@ -41,13 +63,29 @@ public class ReimbursementService {
      * After processing, the reimbursement will have its status changed to either APPROVED or DENIED.
      */
     public Reimbursement process(Reimbursement unprocessedReimbursement, Status finalStatus, User resolver) {
-        return null;
-    }
+    	
+    	
+    	
+    	if(resolver.getRole().equals(Role.FINANCE_MANAGER) ){
+    		reim2.upDateReim(unprocessedReimbursement);
+    		
+    		
+    	}
+    	return unprocessedReimbursement;
+    	
+		
+	}
+    	
 
     /**
      * Should retrieve all reimbursements with the correct status.
      */
     public List<Reimbursement> getReimbursementsByStatus(Status status) {
-        return Collections.emptyList();
+        return reim2.getByStatus(status);
     }
+    public void throwChecked() throws NoteFinanceManException {
+		System.out.println("I'm about to throw a checked exception");
+		throw new NoteFinanceManException("you are not finance manger");
+	}
+    
 }

@@ -26,8 +26,17 @@ public class AbstractReimbursement {
     private User author;
     private User resolver;
     private double amount;
+    private EnurmStatus statuT;
 
-    public AbstractReimbursement() {
+    public EnurmStatus getStatuT() {
+		return statuT;
+	}
+
+	public void setStatuT(EnurmStatus statuT) {
+		this.statuT = statuT;
+	}
+
+	public AbstractReimbursement() {
         super();
     }
 
